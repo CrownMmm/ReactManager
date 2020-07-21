@@ -59,7 +59,7 @@ class Modals extends Component {
                     cancelText="算了"
                     onCancel={() => {
                         this.setState({
-                            showModa2: false
+                            showModal2: false
                         })
                     }}
                 >
@@ -71,7 +71,7 @@ class Modals extends Component {
                     visible={this.state.showModal3}
                     onCancel={() => {
                         this.setState({
-                            showModa3: false
+                            showModal3: false
                         })
                     }}
                 >
@@ -83,7 +83,7 @@ class Modals extends Component {
                     visible={this.state.showModal4}
                     onCancel={() => {
                         this.setState({
-                            showModa3: false
+                            showModal4: false
                         })
                     }}
                 >
