@@ -5,6 +5,7 @@ import './ui.less'
 
 class Tab extends Component {
 
+    newTabIndex =0
     componentWillMount() {
         const panes = [
             {
@@ -24,6 +25,7 @@ class Tab extends Component {
             }
         ]
         this.setState({
+            aciveKey: panes[0].key,
             panes
         })
     }
@@ -32,6 +34,37 @@ class Tab extends Component {
         message.info("当前页签" + key)
     }
 
+    onChange = (aciveKey) => {
+        this.setState({
+            aciveKey
+        })
+    }
+
+    onEdit = (targetKey, action) => {
+        this[action](targetKey);
+    }
+
+    add = () => {
+        const panes = this.state.panes;
+        const activeKey = `newTab${this.newTabIndex++}`;
+        panes.push({ title: activeKey, content: 'New Tab Pane', key: activeKey });
+        this.setState({ panes, activeKey });
+    }
+
+    remove = (targetKey) => {
+        let activeKey = this.state.activeKey;
+        let lastIndex;
+        this.state.panes.forEach((pane, i) => {
+            if (pane.key === targetKey) {
+                lastIndex = i - 1;
+            }
+        });
+        const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+        if (lastIndex >= 0 && activeKey === targetKey) {
+            activeKey = panes[lastIndex].key;
+        }
+        this.setState({ panes, activeKey });
+    }
     render() {
         return (
             <div>
@@ -50,7 +83,12 @@ class Tab extends Component {
                     </Tabs>
                 </Card>
                 <Card title="可新增或删除Tab页签" className="card-wrap">
-                    <Tabs defaultActiveKey="1" onChange={this.handleCallback}>
+                    <Tabs
+                        onChange={this.onChange}
+                        activeKey={this.state.aciveKey}
+                        type="editable-card"
+                        onEdit={this.onEdit}
+                    >
                         {
                             this.state.panes.map((panel) => {
                                 return <Tabs.TabPane
