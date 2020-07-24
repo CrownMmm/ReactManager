@@ -9,7 +9,8 @@ import Loadings from './pages/ui/loading'
 import Notice from './pages/ui/notice'
 import Messages from './pages/ui/messages'
 import Tab from './pages/ui/tabs'
-
+import Gallery from './pages/ui/gallery'
+ 
 import NoMatch from './pages/nomatch'
 class Router extends Component {
     render() {
@@ -26,6 +27,8 @@ class Router extends Component {
                                 <Route path="/admin/ui/notification" component={Notice}></Route>
                                 <Route path="/admin/ui/messages" component={Messages}></Route>
                                 <Route path="/admin/ui/tabs" component={Tab}></Route>
+                                <Route path="/admin/ui/tabs" component={Tab}></Route>
+                                <Route path="/admin/ui/gallery" component={Gallery}></Route>
 
                                 <Route component={NoMatch}></Route>
                             </Switch>
