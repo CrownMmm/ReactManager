@@ -10,7 +10,7 @@ import Notice from './pages/ui/notice'
 import Messages from './pages/ui/messages'
 import Tab from './pages/ui/tabs'
 import Gallery from './pages/ui/gallery'
- 
+import Carousels from './pages/ui/carousel'
 import NoMatch from './pages/nomatch'
 class Router extends Component {
     render() {
@@ -29,6 +29,7 @@ class Router extends Component {
                                 <Route path="/admin/ui/tabs" component={Tab}></Route>
                                 <Route path="/admin/ui/tabs" component={Tab}></Route>
                                 <Route path="/admin/ui/gallery" component={Gallery}></Route>
+                                <Route path="/admin/ui/carousel" component={Carousels}></Route>
 
                                 <Route component={NoMatch}></Route>
                             </Switch>
