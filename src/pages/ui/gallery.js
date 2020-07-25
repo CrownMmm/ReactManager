@@ -1,8 +1,20 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import { Card, Row, Col } from 'antd'
+import { Card, Row, Col, Modal } from 'antd'
 import './ui.less'
 
 class Gallery extends Component {
+
+    state = {
+        visible: false
+    }
+
+    openGallery = (imgSrc) => {
+        this.setState({
+            visible: true,
+            currentImg: '/gallery/'+imgSrc
+        })
+    }
     render() {
         const imgs = [
             ['1.png', '2.png', '3.png', '4.png', '5.png'],
@@ -12,8 +24,8 @@ class Gallery extends Component {
             ['21.png', '22.png', '23.png', '24.png', '25.png']
         ]
         const imgList = imgs.map((list) => list.map((item) =>
-            <Card
-                cover={<img src={'/gallery/' + item} />}
+            <Card style={{ marginBottom: 10 }}
+                cover={<img src={'/gallery/' + item} onClick={() => this.openGallery(item)} />}
             >
                 <Card.Meta
 
@@ -24,7 +36,7 @@ class Gallery extends Component {
         ))
         return (
             <div className="card-wrap">
-                <Row>
+                <Row gutter={10}>
                     <Col md={5}>
                         {imgList[0]}
                     </Col>
@@ -41,7 +53,24 @@ class Gallery extends Component {
                         {imgList[4]}
                     </Col>
                 </Row>
-                
+                <Modal
+                    title='图片画廊'
+                    width={300}
+                    height={500}
+                    visible={this.state.visible}
+                    onCancel={() => {
+                        this.setState({
+                            visible: false
+                        })
+                    }}
+                    footer={null}
+                >
+                    {<img
+                        src={this.state.currentImg}
+                        style={{ width: '100%' }}
+
+                    />}
+                </Modal>
             </div>
         );
     }
