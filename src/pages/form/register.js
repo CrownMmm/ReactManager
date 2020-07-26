@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/href-no-hash */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-undef */
 import React, { Component } from 'react';
 import { Card, Form, Button, Input, Checkbox, Radio, Select, Switch, DatePicker, TimePicker, Upload, Icon, message, InputNumber } from 'antd'
@@ -7,6 +9,32 @@ const TextArea = Input.TextArea;
 const FormItem = Form.Item
 const Option = Select.Option
 class FormRegister extends Component {
+    state={}
+
+    handleSubmit = ()=>{
+        let userInfo = this.props.form.getFieldsValue();
+        console.log(JSON.stringify(userInfo))
+        message.success(`${userInfo.userName} 恭喜你，您通过本次表单组件学习，当前密码为：${userInfo.userPwd}`)
+    }
+
+    handleChange = (info) => {
+        if (info.file.status === 'uploading') {
+            this.setState({ loading: true });
+            return;
+        }
+        if (info.file.status === 'done') {
+            // Get this url from response in real world.
+            this.getBase64(info.file.originFileObj, imageUrl => this.setState({
+                userImg: imageUrl,
+                loading: false,
+            }));
+        }
+    }
+    getBase64 = (img, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    }
     render() {
         const { getFieldDecorator } = this.props.form
         const formItemLayout = {
@@ -17,6 +45,15 @@ class FormRegister extends Component {
             wrapperCol: {
                 xs: 24,
                 sm: 20
+            }
+        }
+        const offsetLayout = {
+            wrapperCol:{
+                xs:24,
+                sm:{
+                    span:12,
+                    offset:4
+                }
             }
         }
         const rowObject = {
@@ -139,19 +176,36 @@ class FormRegister extends Component {
                         <FormItem label="早起时间" {...formItemLayout}>
                             {
                                 getFieldDecorator('time')(
-                                    <TimePicker/>
+                                    <TimePicker />
                                 )
                             }
                         </FormItem>
                         <FormItem label="头像" {...formItemLayout}>
                             {
                                 getFieldDecorator('userImg')(
-                                    <Upload>
-                                        
+                                    <Upload
+                                        listType="picture-card"
+                                        action="//jsonplaceholder.typicode.com/posts/"
+                                        showUploadList={false}
+                                        onChange={this.handleChange}
+
+                                    >
+                                        {this.state.userImg?<img src={this.state.userImg}/>:<Icon type="plus"/>}
                                     </Upload>
                                 )
                             }
                         </FormItem>
+                        <FormItem {...offsetLayout}>
+                            {
+                                getFieldDecorator('userImg')(
+                                   <Checkbox>我已阅读过<a href="#">慕课协议</a></Checkbox>
+                                )
+                            }
+                        </FormItem>
+                        <FormItem {...offsetLayout}>
+                            <Button type="primary" onClick={this.handleSubmit}>注册</Button>
+                        </FormItem>
+
                     </Form>
                 </Card>
             </div>
