@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/href-no-hash */
 import React, { Component } from 'react';
 import { Card, Form, Input, Button, message, Icon, Checkbox } from 'antd'
 
@@ -7,7 +8,7 @@ class FormLogin extends Component {
         let userInfo = this.props.form.getFieldsValue();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                message.success(`${userInfo.userName} 恭喜你，您通过本次表单组件学习，当前密码为：${userInfo.userPwd}`)
+                message.success(`${userInfo.userName} 恭喜表单校验成功，当前密码为：${userInfo.userPwd}`)
             }
         })
     }
