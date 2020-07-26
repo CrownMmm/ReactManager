@@ -61,25 +61,25 @@ const menuList = [
         children: [
             {
                 title: '基础表格',
-                key: '/table/basic',
+                key: '/admin/table/basic',
             },
             {
                 title: '高级表格',
-                key: '/table/high',
+                key: '/admin/table/high',
             }
         ]
     },
     {
         title: '富文本',
-        key: '/rich'
+        key: '/admin/rich'
     },
     {
         title: '城市管理',
-        key: '/city'
+        key: '/admin/city'
     },
     {
         title: '订单管理',
-        key: '/order',
+        key: '/admin/order',
         btnList: [
             {
                 title: '订单详情',
@@ -93,15 +93,15 @@ const menuList = [
     },
     {
         title: '员工管理',
-        key: '/user'
+        key: '/admin/user'
     },
     {
         title: '车辆地图',
-        key: '/bikeMap'
+        key: '/admin/bikeMap'
     },
     {
         title: '图标',
-        key: '/charts',
+        key: '/admin/charts',
         children: [
             {
                 title: '柱形图',
@@ -119,7 +119,7 @@ const menuList = [
     },
     {
         title: '权限设置',
-        key: '/permission'
+        key: '/admin/permission'
     },
 ];
 export default menuList;
