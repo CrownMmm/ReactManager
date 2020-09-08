@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Table, Form, Select, Modal, message } from 'antd';
+import { Card, Button, Table, Form, Select, Modal, message, DatePicker } from 'antd';
 import axios from '../../axios/index'
 import Utils from '../../util/utils';
 const FormItem = Form.Item;
@@ -8,13 +8,68 @@ const Option = Select.Option;
 
 class Order extends Component {
     state = {
-
+        orderInfo:{},
+        orderConfirmVisble:false
     }
+    params = {
+        page: 1
+    }
+    componentDidMount() {
+        this.requestList()
+    }
+    requestList = () => {
+        let _this = this
+        axios.ajax({
+            url: '/order/list',
+            data: {
+                params: {
+                    page: this.params.page
+                }
+            }
+        }).then((res) => {
+            if (res.code == 0) {
+                let list =res.result.item_list.map((item, index) => {
+                    item.key = index
+                    return item
+                })
+                this.setState({
+                    list,
+                    pagination: Utils.pagination(res, (current) => {
+                        _this.params.page = current;
+                        _this.requestList()
+
+                    })
+                })
+            }
+        })
+    }
+
+    onRowClick = (record, index) => {
+        console.log(record);
+        let selectKey = [index];
+        this.setState({
+            selectedRowKeys: selectKey,
+            selectedItem: record
+        })
+    }
+
+    openOrderDetail = () => {
+        let item = this.state.selectedItem;
+        if (!item) {
+            Modal.info({
+                title: '信息',
+                content: '请先选择一条订单'
+            })
+            return;
+        }
+        window.open(`/#/common/order/detail/${item.id}`,'_blank')
+    }
+
     render() {
         const columns = [
             {
-                title:'订单编号',
-                dataIndex:'order_sn'
+                title: '订单编号',
+                dataIndex: 'order_sn'
             },
             {
                 title: '车辆编号',
@@ -31,8 +86,8 @@ class Order extends Component {
             {
                 title: '里程',
                 dataIndex: 'distance',
-                render(distance){
-                    return distance/1000 + 'Km';
+                render(distance) {
+                    return distance / 1000 + 'Km';
                 }
             },
             {
@@ -60,13 +115,22 @@ class Order extends Component {
                 dataIndex: 'user_pay'
             }
         ]
+        const formItemLayout = {
+            labelCol:{span:5},
+            wrapperCol:{span:19}
+        }
+        const selectedRowKeys = this.state.selectedRowKeys;
+        const rowSelection = {
+            type: 'radio',
+            selectedRowKeys
+        }
         return (
             <div>
                 <Card>
                     <FilterForm />
                 </Card>
                 <Card style={{ marginTop: 10 }}>
-                    <Button>订单详情</Button>
+                    <Button onClick={this.openOrderDetail}>订单详情</Button>
                     <Button>结束订单</Button>
                 </Card>
                 <div className="content-wrap">
@@ -75,6 +139,14 @@ class Order extends Component {
                         columns={columns}
                         dataSource={this.state.list}
                         pagination={this.state.pagination}
+                        rowSelection={rowSelection}
+                        onRow={(record, index) => {
+                            return {
+                                onClick: () => {
+                                    this.onRowClick(record, index);
+                                }
+                            };
+                        }}
 
                     />
                 </div>
@@ -119,7 +191,21 @@ class FilterForm extends React.Component {
                         )
                     }
                 </FormItem>
-                <FormItem label="营运模式">
+                <FormItem label="订单时间">
+                    {
+                        getFieldDecorator('start_time')(
+                            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"></DatePicker>
+                        )
+                    }
+                </FormItem>
+                <FormItem >
+                    {
+                        getFieldDecorator('end_time')(
+                            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"></DatePicker>
+                        )
+                    }
+                </FormItem>
+                <FormItem label="订单状态">
                     {
                         getFieldDecorator('op_mode')(
                             <Select
@@ -127,22 +213,8 @@ class FilterForm extends React.Component {
                                 placeholder="全部"
                             >
                                 <Option value="">全部</Option>
-                                <Option value="1">自营</Option>
-                                <Option value="2">加盟</Option>
-                            </Select>
-                        )
-                    }
-                </FormItem>
-                <FormItem label="加盟商授权状态">
-                    {
-                        getFieldDecorator('auth_status')(
-                            <Select
-                                style={{ width: 100 }}
-                                placeholder="全部"
-                            >
-                                <Option value="">全部</Option>
-                                <Option value="1">已授权</Option>
-                                <Option value="2">未授权</Option>
+                                <Option value="1">进行中</Option>
+                                <Option value="2">结束</Option>
                             </Select>
                         )
                     }

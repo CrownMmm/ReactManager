@@ -18,6 +18,9 @@ import BasicTable from './pages/table/basicTable'
 import HighTable from './pages/table/highTable'
 import City from './pages/city'
 import SelectTree from './pages/test/select'
+import Order from './pages/order'
+import Common from './common'
+
 class Router extends Component {
     render() {
         return (
@@ -41,6 +44,8 @@ class Router extends Component {
                                 <Route path="/admin/table/basic" component={BasicTable}></Route>
                                 <Route path="/admin/table/high" component={HighTable}></Route>
                                 <Route path="/admin/city" component={City}></Route>
+                                <Route path="/admin/order" component={Order}></Route>
+
                                 <Route path="/admin/test/select" component={SelectTree}></Route>
 
                                 <Route component={NoMatch}></Route>
@@ -48,6 +53,12 @@ class Router extends Component {
 
                         </Admin>}>
                     </Route>
+                    <Route path="/common" render={() =>
+                            <Common>
+                                <Route path="/common/order/detail/:orderId" component={Login} />
+                            </Common>
+                        }
+                        />
                     <Route path="/order/detail" component={Login}></Route>
                 </App>
             </HashRouter>
