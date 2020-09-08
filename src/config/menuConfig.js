@@ -121,5 +121,23 @@ const menuList = [
         title: '权限设置',
         key: '/admin/permission'
     },
+    {
+        title: '测试antd',
+        key: ' /admin/test',
+        children:[
+            {
+                title: '选择',
+                key: '/admin/test/select'
+            },
+            {
+                title: '表格筛选',
+                key: '/admin/test/filter'
+            },
+            {
+                title: '弹框',
+                key: '/admin/charts/flex'
+            },
+        ]
+    },
 ];
 export default menuList;

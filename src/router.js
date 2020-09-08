@@ -17,7 +17,7 @@ import FormRegister from './pages/form/register';
 import BasicTable from './pages/table/basicTable'
 import HighTable from './pages/table/highTable'
 import City from './pages/city'
-
+import SelectTree from './pages/test/select'
 class Router extends Component {
     render() {
         return (
@@ -41,6 +41,7 @@ class Router extends Component {
                                 <Route path="/admin/table/basic" component={BasicTable}></Route>
                                 <Route path="/admin/table/high" component={HighTable}></Route>
                                 <Route path="/admin/city" component={City}></Route>
+                                <Route path="/admin/test/select" component={SelectTree}></Route>
 
                                 <Route component={NoMatch}></Route>
                             </Switch>
