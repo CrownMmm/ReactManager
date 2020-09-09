@@ -19,6 +19,8 @@ import HighTable from './pages/table/highTable'
 import City from './pages/city'
 import SelectTree from './pages/test/select'
 import Order from './pages/order'
+import OrderDetail from './pages/order/detail'
+
 import Common from './common'
 
 class Router extends Component {
@@ -55,7 +57,7 @@ class Router extends Component {
                     </Route>
                     <Route path="/common" render={() =>
                             <Common>
-                                <Route path="/common/order/detail/:orderId" component={Login} />
+                                <Route path="/common/order/detail/:orderId" component={OrderDetail} />
                             </Common>
                         }
                         />
