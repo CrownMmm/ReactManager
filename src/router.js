@@ -20,6 +20,8 @@ import City from './pages/city'
 import SelectTree from './pages/test/select'
 import Order from './pages/order'
 import OrderDetail from './pages/order/detail'
+import TableTest from './pages/test/table'
+import TodoList from './pages/test/todolist'
 
 import Common from './common'
 
@@ -49,6 +51,8 @@ class Router extends Component {
                                 <Route path="/admin/order" component={Order}></Route>
 
                                 <Route path="/admin/test/select" component={SelectTree}></Route>
+                                <Route path="/admin/test/filter" component={TableTest}></Route>
+                                <Route path="/admin/test/todolist" component={TodoList}></Route>
 
                                 <Route component={NoMatch}></Route>
                             </Switch>

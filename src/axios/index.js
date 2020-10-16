@@ -2,6 +2,22 @@ import JsonP from 'jsonp'
 import axios from 'axios'
 import { Modal } from 'antd'
 export default class Axios {
+
+    // static requestList(url,params){
+    //     var data = {
+    //         params:params
+    //     }
+    //     this.ajax({
+    //         url,
+    //         data
+    //     }).then((data)=>{
+    //         if (data) {
+
+    //         }
+    //     })
+    // }
+
+
     static jsonp(options) {
         return new Promise((resolve, reject) => {
             JsonP(options.url, {
